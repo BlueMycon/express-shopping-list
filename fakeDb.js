@@ -1,5 +1,5 @@
 "use strict";
-const items = [];
+let items = [];
 
 /**
  * Class for the item object
@@ -41,6 +41,10 @@ class Item {
     item.name = newName;
     return item;
   };
+
+  static deleteAll() {
+    items = [];
+  }
 }
 
 

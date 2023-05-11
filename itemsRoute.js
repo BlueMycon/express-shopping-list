@@ -2,8 +2,10 @@
 
 const express = require("express");
 const { Item } = require("./fakeDb");
+const { invalidName, missingData } = require("./middleware");
 const router = new express.Router();
 router.use(express.json());
+
 
 /**Route for a get request to /items */
 router.get("/", function (req, res) {
@@ -11,13 +13,20 @@ router.get("/", function (req, res) {
   return res.json({ items: Item.all() });
 });
 
+
 /**Route for a post request to /items */
-router.post("/", function (req, res) {
+router.post(
+  "/",
+  missingData,
+  function (req, res) {
   const requestObj = req.body;
   const { name, price } = Item.add(requestObj);
 
-  return res.json({ added: { name, price } });
+  return res.status(201).json({ added: { name, price } });
 });
+
+
+router.use("/:name", invalidName);
 
 /**Route for a get request to specific /item/:name */
 router.get("/:name", function (req, res) {
