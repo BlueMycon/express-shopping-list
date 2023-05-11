@@ -3,14 +3,12 @@
 
 const express = require("express");
 const itemsRoute = require("./itemsRoute");
-const morgan = require("morgan");
-// const { items } = require("./fakeDb");
 
 const app = express();
 app.use(express.json());
 
 // useful error class to throw
-const { NotFoundError, BadRequestError } = require("./expressError");
+const { NotFoundError } = require("./expressError");
 
 app.use("/items", itemsRoute);
 

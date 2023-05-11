@@ -42,6 +42,7 @@ class Item {
     return item;
   };
 
+  /**Delete all the items in the array db */
   static deleteAll() {
     items = [];
   }

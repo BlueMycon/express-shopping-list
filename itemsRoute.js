@@ -4,7 +4,8 @@ const express = require("express");
 const { Item } = require("./fakeDb");
 const { invalidName, missingData } = require("./middleware");
 const router = new express.Router();
-router.use(express.json());
+
+router.use("/:name", invalidName);
 
 
 /**Route for a get request to /items */
@@ -26,8 +27,6 @@ router.post(
 });
 
 
-router.use("/:name", invalidName);
-
 /**Route for a get request to specific /item/:name */
 router.get("/:name", function (req, res) {
   const itemName = req.params.name;
@@ -38,9 +37,7 @@ router.get("/:name", function (req, res) {
 
 /**Route for a patch request to update specific /item/:name */
 router.patch("/:name", function (req, res) {
-  console.log("\n\n testing")
   const itemName = req.params.name;
-  console.log("\n\nitemName=", itemName);
   const jsonBody = req.body;
   const { name, price } = Item.updateName(itemName, jsonBody.name);
 

@@ -37,12 +37,14 @@ describe("POST /items", function() {
       });
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).toEqual({added: {name: "chocolate", price: "1.00" }});
+    expect(db.Item.get("chocolate")).toEqual({name: "chocolate", price: "1.00" });
   });
 
   it("Responds with 400 if name invalid", async function() {
     const resp = await request(app).post(`/items`).send({ nonsense: "nonsense" });
     expect(resp.statusCode).toEqual(400);
   });
+
 });
 
 
@@ -53,7 +55,7 @@ describe("GET /items/:name", function() {
     const resp = await request(app)
     .get(`/items/${popsicle.name}`);
     expect(resp.statusCode).toEqual(200);
-    expect(resp.body).toEqual({name: "popsicle", "price": 1.45});
+    expect(resp.body).toEqual(popsicle);
   });
 
   it("Responds with 404 if name invalid", async function() {
